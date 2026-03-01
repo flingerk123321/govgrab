@@ -4,8 +4,11 @@ Aggregates listings from GSA Auctions, GovDeals, PublicSurplus, and Municibid.
 """
 from __future__ import annotations
 
-from dotenv import load_dotenv
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not needed on Streamlit Cloud
 
 import logging
 import math
