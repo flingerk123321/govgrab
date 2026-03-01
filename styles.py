@@ -23,12 +23,14 @@ header[data-testid="stHeader"] {
     height: 0 !important;
 }
 
-/* Sidebar — ensure it stays visible and expanded */
-[data-testid="stSidebar"],
-section[data-testid="stSidebar"] {
-    transform: none !important;
-    visibility: visible !important;
-    position: relative !important;
+/* Sidebar — force open on desktop only, collapsible on mobile */
+@media (min-width: 769px) {
+    [data-testid="stSidebar"],
+    section[data-testid="stSidebar"] {
+        transform: none !important;
+        visibility: visible !important;
+        position: relative !important;
+    }
 }
 
 html, body, [class*="css"] {
@@ -354,12 +356,16 @@ hr { border-color: #2D3748 !important; }
 section[data-testid="stSidebar"] {
     background: #111118 !important;
     border-right: none !important;
-    min-width: 260px !important;
-    width: 260px !important;
 }
-section[data-testid="stSidebar"] > div:first-child {
-    width: 260px !important;
-    min-width: 260px !important;
+@media (min-width: 769px) {
+    section[data-testid="stSidebar"] {
+        min-width: 260px !important;
+        width: 260px !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child {
+        width: 260px !important;
+        min-width: 260px !important;
+    }
 }
 section[data-testid="stSidebar"] * { color: #CBD5E1 !important; }
 section[data-testid="stSidebar"] hr { border-color: #2D3748 !important; }
