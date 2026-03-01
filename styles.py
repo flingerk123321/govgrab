@@ -13,20 +13,7 @@ header[data-testid="stHeader"] {
     height: 0 !important;
 }
 
-/* Force sidebar always visible */
-section[data-testid="stSidebar"] {
-    transform: none !important;
-    visibility: visible !important;
-    display: flex !important;
-}
-/* Hide all sidebar collapse/expand controls */
-button[data-testid="stSidebarCollapseButton"],
-button[data-testid="baseButton-headerNoPadding"],
-[data-testid="collapsedControl"],
-section[data-testid="stSidebar"] button[kind="headerNoPadding"],
-section[data-testid="stSidebar"] svg[data-testid="stSidebarCollapseButton"] {
-    display: none !important;
-}
+/* Sidebar expand/collapse — let Streamlit handle natively */
 
 html, body, [class*="css"] {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -351,6 +338,12 @@ hr { border-color: #2D3748 !important; }
 section[data-testid="stSidebar"] {
     background: #111118 !important;
     border-right: none !important;
+    min-width: 260px !important;
+    width: 260px !important;
+}
+section[data-testid="stSidebar"] > div:first-child {
+    width: 260px !important;
+    min-width: 260px !important;
 }
 section[data-testid="stSidebar"] * { color: #CBD5E1 !important; }
 section[data-testid="stSidebar"] hr { border-color: #2D3748 !important; }
