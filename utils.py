@@ -10,6 +10,18 @@ from datetime import datetime
 
 logger = logging.getLogger("govgrab")
 
+
+def get_secret(key, default=""):
+    """Get a secret from os.environ or st.secrets (Streamlit Cloud)."""
+    val = os.environ.get(key, "")
+    if val:
+        return val
+    try:
+        import streamlit as st
+        return st.secrets.get(key, default)
+    except Exception:
+        return default
+
 # ── Config ──
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 SAVED_SEARCHES_FILE = os.path.join(APP_DIR, "saved_searches.json")
@@ -86,7 +98,7 @@ def load_settings():
             s = json.load(f)
     else:
         s = {"gsa_api_key": "", "zip_code": "", "radius_miles": 100}
-    env_key = os.environ.get("GSA_API_KEY", "")
+    env_key = get_secret("GSA_API_KEY", "")
     if env_key:
         s["gsa_api_key"] = env_key
     return s

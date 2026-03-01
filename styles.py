@@ -13,7 +13,13 @@ header[data-testid="stHeader"] {
     height: 0 !important;
 }
 
-/* Sidebar expand/collapse — let Streamlit handle natively */
+/* Sidebar — ensure it stays visible and expanded */
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"] {
+    transform: none !important;
+    visibility: visible !important;
+    position: relative !important;
+}
 
 html, body, [class*="css"] {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;

@@ -13,12 +13,12 @@ import streamlit as st
 from bs4 import BeautifulSoup
 from urllib.parse import quote_plus, urlencode
 
-from utils import UA, detect_category, parse_price, parse_date
+from utils import UA, detect_category, parse_price, parse_date, get_secret
 
 logger = logging.getLogger("govgrab")
 
 # ── GovDeals kill switch ──
-ENABLE_GOVDEALS = os.getenv("ENABLE_GOVDEALS", "true").lower() != "false"
+ENABLE_GOVDEALS = get_secret("ENABLE_GOVDEALS", "true").lower() != "false"
 
 # ── Circuit breaker state (in-memory, resets on app restart) ──
 _govdeals_circuit = {"tripped": False, "tripped_at": None, "cooldown_hours": 1}
@@ -235,7 +235,7 @@ def fetch_municibid_listings(keyword="", state="", max_pages=3):
 
 
 GOVDEALS_API_URL = "https://maestro.lqdt1.com/search/list"
-GOVDEALS_API_KEY = os.getenv("GOVDEALS_API_KEY", "")
+GOVDEALS_API_KEY = get_secret("GOVDEALS_API_KEY", "")
 GOVDEALS_IMG_BASE = "https://webassets.lqdt1.com/assets/photos/"
 
 
