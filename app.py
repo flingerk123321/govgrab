@@ -23,7 +23,7 @@ from utils import (
 )
 from scrapers import fetch_all_listings
 from components import render_fee_banner, render_listing_grid
-from styles import CSS
+from styles import CSS, GA_SCRIPT
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("govgrab")
@@ -49,7 +49,8 @@ if "_nav_page" in st.session_state:
     if nav_target in PAGES:
         st.session_state["_page_radio"] = nav_target
 
-# ── Global CSS ──
+# ── Analytics & Global CSS ──
+st.markdown(GA_SCRIPT, unsafe_allow_html=True)
 st.markdown(CSS, unsafe_allow_html=True)
 
 # ── Sidebar ──
