@@ -40,7 +40,7 @@ def navigate_to(page_name, **kwargs):
 # ══════════════════════════════════════════════════════
 # STREAMLIT APP
 # ══════════════════════════════════════════════════════
-st.set_page_config(page_title="GovGrab", page_icon="https://em-content.zobj.net/source/twitter/376/classical-building_1f3db-fe0f.png", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="GovGrab", page_icon="https://em-content.zobj.net/source/twitter/376/classical-building_1f3db-fe0f.png", layout="wide", initial_sidebar_state="auto")
 
 # ── Handle navigation from session state ──
 PAGES = ["Home", "Search", "Ending Soon", "Saved Searches", "Blog", "Settings"]

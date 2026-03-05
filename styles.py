@@ -18,9 +18,11 @@ CSS = """
 footer {visibility: hidden;}
 div[data-testid="stToolbar"] {display: none;}
 .stDeployButton {display: none;}
-header[data-testid="stHeader"] {
-    display: none !important;
-    height: 0 !important;
+@media (min-width: 769px) {
+    header[data-testid="stHeader"] {
+        display: none !important;
+        height: 0 !important;
+    }
 }
 
 /* Sidebar — force open on desktop only, collapsible on mobile */
