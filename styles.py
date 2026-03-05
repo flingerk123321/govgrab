@@ -14,11 +14,11 @@ CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-#MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-div[data-testid="stToolbar"] {display: none;}
 .stDeployButton {display: none;}
 @media (min-width: 769px) {
+    #MainMenu {visibility: hidden;}
+    div[data-testid="stToolbar"] {display: none;}
     header[data-testid="stHeader"] {
         display: none !important;
         height: 0 !important;
