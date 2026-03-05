@@ -53,6 +53,19 @@ if "_nav_page" in st.session_state:
 st.markdown(GA_SCRIPT, unsafe_allow_html=True)
 st.markdown(CSS, unsafe_allow_html=True)
 
+# ── OpenGraph / social sharing meta tags ──
+st.markdown(
+    '''<meta property="og:title" content="GovGrab — Government Surplus Auction Search">
+<meta property="og:description" content="Search GSA Auctions, GovDeals, PublicSurplus & Municibid in one place. Find government surplus at 30-70% below retail.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://govgrab.streamlit.app">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GovGrab — Government Surplus Auction Search">
+<meta name="twitter:description" content="One search across 4 government auction platforms. Vehicles, equipment, electronics & more.">''',
+    unsafe_allow_html=True,
+)
+
+
 # ── Sidebar ──
 NAV_LABELS = {"Home": "\U0001F3E0  Home", "Search": "\U0001F50D  Search", "Ending Soon": "\u23F0  Ending Soon", "Saved Searches": "\U0001F516  Saved Searches", "Blog": "\U0001F4DD  Blog", "Settings": "\u2699\uFE0F  Settings"}
 
