@@ -77,6 +77,9 @@ def inject_meta_tags(title="GovGrab — Government Surplus Auction Search",
         unsafe_allow_html=True,
     )
 
+# Google Search Console verification
+st.markdown('<meta name="google-site-verification" content="fkt1BaAq8op9LLTznw8fqBMj2iJkEM7Y-3ZbdFecquw" />', unsafe_allow_html=True)
+
 # Default meta tags (overridden per-page below)
 inject_meta_tags()
 
