@@ -93,4 +93,4 @@ The biggest limitation is discoverability. GSA's search isn't great, listings ar
 
 ---
 
-*GovGrab indexes GSA Auctions alongside GovDeals, GovPlanet, and other platforms so you can compare listings across all of them in one search — with true cost calculated automatically. [Try it free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

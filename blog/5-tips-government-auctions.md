@@ -67,4 +67,4 @@ This is exactly why tools like GovGrab exist — searching one platform at a tim
 
 ---
 
-*Want to search all platforms at once? [Try GovGrab — it's free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

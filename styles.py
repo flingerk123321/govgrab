@@ -7,6 +7,39 @@ GA_SCRIPT = """
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-D7Y426FBJ9');
+
+  /* Custom GA4 event helpers */
+  function gg_search(keyword, state, category, resultCount) {
+    gtag('event', 'search', {
+      search_term: keyword,
+      state_filter: state,
+      category_filter: category,
+      result_count: resultCount
+    });
+  }
+  function gg_listing_click(platform, title, price) {
+    gtag('event', 'listing_click', {
+      platform: platform,
+      listing_title: title,
+      listing_price: price
+    });
+  }
+  function gg_blog_read(slug, title) {
+    gtag('event', 'blog_read', {
+      blog_slug: slug,
+      blog_title: title
+    });
+  }
+  function gg_email_signup() {
+    gtag('event', 'email_signup', { method: 'inline_form' });
+  }
+  function gg_share(method, content_type, item_id) {
+    gtag('event', 'share', {
+      method: method,
+      content_type: content_type,
+      item_id: item_id
+    });
+  }
 </script>
 """
 
@@ -446,6 +479,85 @@ section[data-testid="stSidebar"] [data-testid="stRadio"] label input[type="radio
 .platform-status-ok { background: rgba(34,197,94,0.12); color: #4ADE80; }
 .platform-status-empty { background: rgba(251,191,36,0.12); color: #FCD34D; }
 .platform-status-error { background: rgba(248,113,113,0.12); color: #FCA5A5; }
+
+/* ── Email capture ── */
+.email-capture {
+    background: linear-gradient(135deg, #1A1A24, #111118);
+    border: 1px solid #2D3748;
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+}
+.email-capture::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #22C55E, #0EA5E9, transparent);
+}
+.email-capture h3 { font-size: 20px; font-weight: 700; color: #F8FAFC; margin-bottom: 6px; }
+.email-capture p { font-size: 14px; color: #94A3B8; margin-bottom: 16px; }
+.email-capture-form {
+    display: flex; gap: 10px; max-width: 480px; margin: 0 auto;
+    justify-content: center; align-items: center;
+}
+.email-capture-form input[type="email"] {
+    flex: 1; padding: 10px 14px; border-radius: 8px;
+    border: 1px solid #3D4560; background: #232334; color: #F8FAFC;
+    font-size: 14px; font-family: inherit;
+}
+.email-capture-form input[type="email"]:focus {
+    outline: none; border-color: #0EA5E9;
+    box-shadow: 0 0 0 1px #0EA5E9;
+}
+.email-capture-form button {
+    padding: 10px 20px; border-radius: 8px; border: none;
+    background: linear-gradient(135deg, #0EA5E9, #0284C7);
+    color: white; font-weight: 600; font-size: 14px;
+    cursor: pointer; white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.email-capture-form button:hover {
+    box-shadow: 0 0 20px rgba(14,165,233,0.4);
+    transform: translateY(-1px);
+}
+
+/* ── Share buttons ── */
+.share-row {
+    display: flex; gap: 8px; align-items: center; margin: 12px 0;
+}
+.share-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px; font-size: 13px;
+    font-weight: 500; text-decoration: none !important; color: white !important;
+    transition: all 0.2s ease; cursor: pointer;
+}
+.share-btn:hover { transform: translateY(-1px); filter: brightness(1.15); }
+.share-btn-x { background: #1D9BF0; }
+.share-btn-fb { background: #1877F2; }
+.share-btn-reddit { background: #FF4500; }
+.share-btn-copy { background: #475569; }
+.share-btn-linkedin { background: #0A66C2; }
+
+/* ── Blog CTA ── */
+.blog-cta {
+    background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(34,197,94,0.08));
+    border: 1px solid rgba(14,165,233,0.2);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 28px 0 12px 0;
+    text-align: center;
+}
+.blog-cta h3 { font-size: 18px; font-weight: 700; color: #F8FAFC; margin-bottom: 6px; }
+.blog-cta p { font-size: 14px; color: #94A3B8; margin-bottom: 12px; }
+.blog-cta a {
+    display: inline-block; padding: 10px 24px; border-radius: 8px;
+    background: linear-gradient(135deg, #0EA5E9, #0284C7);
+    color: white !important; font-weight: 600; text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+.blog-cta a:hover { box-shadow: 0 0 20px rgba(14,165,233,0.4); transform: translateY(-1px); }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {

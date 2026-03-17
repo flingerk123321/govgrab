@@ -99,4 +99,4 @@ Government equipment auctions attract a specific mix of buyers:
 
 ---
 
-*GovGrab tracks heavy equipment listings across GovPlanet, GovDeals, GSA Auctions, and IronPlanet — all in one search with true cost including buyer's premiums. [Find equipment near you.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

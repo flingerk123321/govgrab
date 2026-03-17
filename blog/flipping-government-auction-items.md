@@ -93,4 +93,4 @@ Flipping government auction items is a legitimate side hustle — or a full busi
 
 ---
 
-*GovGrab searches across GovDeals, PublicSurplus, GSA Auctions, Municibid, and more — so you can find low-competition listings before other resellers do. [Search for free on GovGrab.](https://govgrab.com)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

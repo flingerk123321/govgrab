@@ -123,4 +123,4 @@ For vehicles, ask the selling agency in advance what title documentation they pr
 
 ---
 
-*GovGrab shows pickup location for every listing so you can filter auctions by distance. No more winning a deal 1,500 miles away. [Search nearby auctions.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

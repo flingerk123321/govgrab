@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://govgrab.net/sitemap.xml

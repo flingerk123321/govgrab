@@ -180,6 +180,46 @@ def get_blog_banner_html(slug, height="140px"):
     )
 
 
+# ── Blog internal link mapping ──
+# Maps each slug to related slugs for cross-linking
+BLOG_RELATED = {
+    "how-to-buy-government-surplus-vehicles": ["police-auction-cars", "government-auction-pickup-guide", "understanding-buyers-premiums"],
+    "police-auction-cars": ["how-to-buy-government-surplus-vehicles", "govdeals-vs-publicsurplus", "5-tips-government-auctions"],
+    "heavy-equipment-government-auctions": ["gsa-auctions-guide", "understanding-buyers-premiums", "state-surplus-auctions"],
+    "government-surplus-laptops-electronics": ["5-tips-government-auctions", "flipping-government-auction-items", "best-government-auction-sites-2026"],
+    "gsa-auctions-guide": ["best-government-auction-sites-2026", "govdeals-vs-publicsurplus", "how-to-buy-government-surplus-vehicles"],
+    "govdeals-vs-publicsurplus": ["gsa-auctions-guide", "understanding-buyers-premiums", "best-government-auction-sites-2026"],
+    "flipping-government-auction-items": ["5-tips-government-auctions", "government-surplus-laptops-electronics", "police-auction-cars"],
+    "best-government-auction-sites-2026": ["gsa-auctions-guide", "govdeals-vs-publicsurplus", "what-is-govgrab"],
+    "government-auction-pickup-guide": ["how-to-buy-government-surplus-vehicles", "heavy-equipment-government-auctions", "5-tips-government-auctions"],
+    "state-surplus-auctions": ["best-government-auction-sites-2026", "govdeals-vs-publicsurplus", "gsa-auctions-guide"],
+    "5-tips-government-auctions": ["flipping-government-auction-items", "understanding-buyers-premiums", "government-auction-pickup-guide"],
+    "understanding-buyers-premiums": ["govdeals-vs-publicsurplus", "gsa-auctions-guide", "5-tips-government-auctions"],
+    "what-is-govgrab": ["best-government-auction-sites-2026", "gsa-auctions-guide", "5-tips-government-auctions"],
+}
+
+
+def get_blog_internal_links(current_slug, all_posts):
+    """Generate HTML for 'Related Articles' links at the bottom of a blog post."""
+    related_slugs = BLOG_RELATED.get(current_slug, [])
+    if not related_slugs:
+        return ""
+    post_map = {p["slug"]: p for p in all_posts}
+    links = []
+    for slug in related_slugs:
+        if slug in post_map:
+            title = post_map[slug]["meta"].get("title", slug)
+            links.append(f'<li><strong>{title}</strong></li>')
+    if not links:
+        return ""
+    return (
+        '<div style="margin-top:28px;padding-top:20px;border-top:1px solid #2D3748;">'
+        '<h3 style="font-size:16px;color:#F8FAFC;margin-bottom:10px;">Related Articles</h3>'
+        f'<ul style="color:#0EA5E9;">{"".join(links)}</ul>'
+        '</div>'
+    )
+
+
 def load_blog_posts():
     posts = []
     if not os.path.isdir(BLOG_DIR):
@@ -201,3 +241,64 @@ def load_blog_posts():
         posts.append({"slug": slug, "meta": meta, "body": body, "path": fpath})
     posts.sort(key=lambda p: p["meta"].get("date", ""), reverse=True)
     return posts
+
+
+def generate_sitemap_xml(site_url="https://govgrab.net"):
+    """Generate a sitemap XML string for all pages and blog posts."""
+    from datetime import date
+    today = date.today().isoformat()
+    posts = load_blog_posts()
+
+    urls = [
+        (site_url, today, "daily", "1.0"),
+        (f"{site_url}/?page=Search", today, "daily", "0.9"),
+        (f"{site_url}/?page=Blog", today, "weekly", "0.8"),
+        (f"{site_url}/?page=Ending+Soon", today, "daily", "0.8"),
+    ]
+    for post in posts:
+        post_date = post["meta"].get("date", today)
+        urls.append((f"{site_url}/?blog={post['slug']}", post_date, "monthly", "0.7"))
+
+    xml_parts = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, lastmod, freq, priority in urls:
+        xml_parts.append(
+            f"  <url><loc>{loc}</loc><lastmod>{lastmod}</lastmod>"
+            f"<changefreq>{freq}</changefreq><priority>{priority}</priority></url>"
+        )
+    xml_parts.append("</urlset>")
+    return "\n".join(xml_parts)
+
+
+def get_structured_data_json(page_type="website", title="GovGrab", description="", url="https://govgrab.net"):
+    """Generate JSON-LD structured data for SEO."""
+    import json
+    if page_type == "article":
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": title,
+            "description": description,
+            "url": url,
+            "publisher": {
+                "@type": "Organization",
+                "name": "GovGrab",
+                "url": "https://govgrab.net",
+            },
+        }
+    else:
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "GovGrab",
+            "url": "https://govgrab.net",
+            "description": "Search government surplus auctions from GSA, GovDeals, PublicSurplus, and Municibid in one place.",
+            "applicationCategory": "Shopping",
+            "operatingSystem": "Web",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+            },
+        }
+    return f'<script type="application/ld+json">{json.dumps(schema)}</script>'

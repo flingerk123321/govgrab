@@ -74,8 +74,13 @@ def render_listing_card(listing, show_true_cost=True):
 
     time_overlay = f'<div class="card-time-overlay">{time_html}</div>' if time_html else ''
 
+    import html as html_mod
+    safe_title = html_mod.escape(listing["title"]).replace("'", "\\'")
+    price_val = listing["current_bid"] if listing["current_bid"] is not None else 0
+
     return (
-        f'<a href="{listing["url"]}" target="_blank" class="card-link">'
+        f'<a href="{listing["url"]}" target="_blank" class="card-link" '
+        f'onclick="gg_listing_click(\'{listing["platform"]}\',\'{safe_title}\',{price_val})">'
         f'<div class="listing-card">'
         f'<div class="card-img-wrap">'
         f'{img_html}'

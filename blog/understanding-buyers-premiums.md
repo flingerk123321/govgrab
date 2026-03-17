@@ -75,4 +75,4 @@ Always know the buyer's premium before you bid. A 12.5% premium on a $10,000 exc
 
 ---
 
-*GovGrab automatically shows true cost including buyer's premiums. [Search now — free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

@@ -20,10 +20,13 @@ from utils import (
     CATEGORIES, PLATFORM_FEES, US_STATES,
     get_blog_banner_html, load_blog_posts, load_saved_searches, load_settings,
     sanitize_keyword, save_saved_searches, save_settings,
+    get_blog_internal_links, get_structured_data_json, generate_sitemap_xml,
 )
 from scrapers import fetch_all_listings
 from components import render_fee_banner, render_listing_grid
 from styles import CSS, GA_SCRIPT
+
+SITE_URL = "https://govgrab.net"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("govgrab")
@@ -53,17 +56,81 @@ if "_nav_page" in st.session_state:
 st.markdown(GA_SCRIPT, unsafe_allow_html=True)
 st.markdown(CSS, unsafe_allow_html=True)
 
-# ── OpenGraph / social sharing meta tags ──
-st.markdown(
-    '''<meta property="og:title" content="GovGrab — Government Surplus Auction Search">
-<meta property="og:description" content="Search GSA Auctions, GovDeals, PublicSurplus & Municibid in one place. Find government surplus at 30-70% below retail.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://govgrab.streamlit.app">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GovGrab — Government Surplus Auction Search">
-<meta name="twitter:description" content="One search across 4 government auction platforms. Vehicles, equipment, electronics & more.">''',
-    unsafe_allow_html=True,
-)
+# ── Dynamic meta tags helper ──
+def inject_meta_tags(title="GovGrab — Government Surplus Auction Search",
+                     description="Search GSA Auctions, GovDeals, PublicSurplus & Municibid in one place. Find government surplus at 30-70% below retail.",
+                     url=SITE_URL, og_type="website"):
+    """Inject OpenGraph, Twitter Card, and SEO meta tags."""
+    import html
+    t = html.escape(title)
+    d = html.escape(description)
+    st.markdown(
+        f'<meta property="og:title" content="{t}">'
+        f'<meta property="og:description" content="{d}">'
+        f'<meta property="og:type" content="{og_type}">'
+        f'<meta property="og:url" content="{html.escape(url)}">'
+        f'<meta name="twitter:card" content="summary">'
+        f'<meta name="twitter:title" content="{t}">'
+        f'<meta name="twitter:description" content="{d}">'
+        f'<meta name="description" content="{d}">'
+        f'<link rel="canonical" href="{html.escape(url)}">',
+        unsafe_allow_html=True,
+    )
+
+# Default meta tags (overridden per-page below)
+inject_meta_tags()
+
+# Structured data (JSON-LD) for search engines
+st.markdown(get_structured_data_json(), unsafe_allow_html=True)
+
+
+def render_email_capture():
+    """Render an email signup CTA section."""
+    st.markdown(
+        '<div class="email-capture">'
+        '<h3>Get Notified About New Deals</h3>'
+        '<p>Enter your email to receive alerts when new auctions match popular searches.</p>'
+        '</div>', unsafe_allow_html=True)
+    ec1, ec2, ec3 = st.columns([2, 3, 2])
+    with ec2:
+        email_val = st.text_input("email_capture", placeholder="you@example.com", label_visibility="collapsed", key="email_capture_input")
+        if st.button("Subscribe", key="email_subscribe_btn", type="primary", use_container_width=True):
+            if email_val and "@" in email_val:
+                # Store emails in a local file for now
+                import os, json
+                from utils import APP_DIR
+                email_file = os.path.join(APP_DIR, "email_subscribers.json")
+                emails = []
+                if os.path.exists(email_file):
+                    with open(email_file) as f:
+                        emails = json.load(f)
+                if email_val not in emails:
+                    emails.append(email_val)
+                    with open(email_file, "w") as f:
+                        json.dump(emails, f, indent=2)
+                st.success("You're subscribed! We'll email you when we launch alerts.")
+                st.markdown('<script>gg_email_signup();</script>', unsafe_allow_html=True)
+            else:
+                st.warning("Please enter a valid email address.")
+
+
+def render_share_buttons(title, url, content_type="page"):
+    """Render social share buttons for a page or blog post."""
+    import urllib.parse
+    encoded_title = urllib.parse.quote(title)
+    encoded_url = urllib.parse.quote(url)
+    st.markdown(
+        f'<div class="share-row">'
+        f'<span style="font-size:13px;color:#94A3B8;font-weight:500;">Share:</span>'
+        f'<a class="share-btn share-btn-x" href="https://twitter.com/intent/tweet?text={encoded_title}&url={encoded_url}" target="_blank" '
+        f'onclick="gg_share(\'twitter\',\'{content_type}\',\'{url}\')">X</a>'
+        f'<a class="share-btn share-btn-reddit" href="https://reddit.com/submit?url={encoded_url}&title={encoded_title}" target="_blank" '
+        f'onclick="gg_share(\'reddit\',\'{content_type}\',\'{url}\')">Reddit</a>'
+        f'<a class="share-btn share-btn-fb" href="https://www.facebook.com/sharer/sharer.php?u={encoded_url}" target="_blank" '
+        f'onclick="gg_share(\'facebook\',\'{content_type}\',\'{url}\')">Facebook</a>'
+        f'<a class="share-btn share-btn-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={encoded_url}" target="_blank" '
+        f'onclick="gg_share(\'linkedin\',\'{content_type}\',\'{url}\')">LinkedIn</a>'
+        f'</div>', unsafe_allow_html=True)
 
 
 # ── Sidebar ──
@@ -196,6 +263,9 @@ if page == "Home":
         'at 30-70% below retail. One search. All platforms.</p>'
         '</div>', unsafe_allow_html=True)
 
+    # Email capture
+    render_email_capture()
+
     # Blog teaser
     posts = load_blog_posts()
     if posts:
@@ -270,6 +340,9 @@ elif page == "Search":
             else:
                 return item["end_date_dt"].timestamp() if item.get("end_date_dt") else float("inf")
         results.sort(key=sort_key)
+
+        # Fire GA4 search event
+        st.markdown(f'<script>gg_search("{keyword}", "{state_filter}", "{category_filter}", {len(results)});</script>', unsafe_allow_html=True)
 
         # Results bar with per-platform status
         st.markdown(f'<div class="results-bar"><div class="results-count"><strong>{len(results)}</strong> results</div></div>', unsafe_allow_html=True)
@@ -421,6 +494,18 @@ elif page == "Blog":
         slug = st.session_state["blog_post"]
         post = next((p for p in posts if p["slug"] == slug), None)
         if post:
+            post_title = post["meta"].get("title", slug)
+            post_desc = post["meta"].get("description", "")
+            post_url = f"{SITE_URL}/?blog={slug}"
+
+            # Dynamic meta tags for this blog post
+            inject_meta_tags(title=f"{post_title} — GovGrab", description=post_desc, url=post_url, og_type="article")
+            st.markdown(get_structured_data_json(page_type="article", title=post_title, description=post_desc, url=post_url), unsafe_allow_html=True)
+
+            # GA4 blog read event
+            import html as html_mod
+            st.markdown(f'<script>gg_blog_read("{slug}", "{html_mod.escape(post_title)}");</script>', unsafe_allow_html=True)
+
             if st.button("< Back to Blog"):
                 del st.session_state["blog_post"]
                 st.rerun()
@@ -429,13 +514,34 @@ elif page == "Blog":
             st.markdown(
                 f'<div class="article-header">'
                 f'<div class="meta">{post["meta"].get("date", "")} &middot; {post["meta"].get("category", "")}</div>'
-                f'<h1>{post["meta"].get("title", slug)}</h1>'
-                f'<div class="meta">{post["meta"].get("description", "")}</div>'
+                f'<h1>{post_title}</h1>'
+                f'<div class="meta">{post_desc}</div>'
                 f'</div>', unsafe_allow_html=True)
 
+            # Share buttons
+            render_share_buttons(post_title, post_url, content_type="blog_post")
+
+            # Render blog body with internal links appended
+            internal_links_html = get_blog_internal_links(slug, posts)
             st.markdown(f'<div class="article-body">', unsafe_allow_html=True)
             st.markdown(post["body"])
+            if internal_links_html:
+                st.markdown(internal_links_html, unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+            # CTA at end of each blog post
+            st.markdown(
+                '<div class="blog-cta">'
+                '<h3>Search Government Auctions Now</h3>'
+                '<p>Find vehicles, equipment, electronics, and more from GSA, GovDeals, PublicSurplus, and Municibid — all in one search.</p>'
+                '<a href="/" onclick="return false;" id="blog-cta-link">Search on GovGrab</a>'
+                '</div>', unsafe_allow_html=True)
+            if st.button("Search auctions now", key="blog_cta_search"):
+                navigate_to("Search")
+                st.rerun()
+
+            # Email capture after CTA
+            render_email_capture()
 
             # Related posts
             others = [p for p in posts if p["slug"] != slug][:3]

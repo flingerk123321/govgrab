@@ -49,4 +49,4 @@ GovGrab's basic search is free. Always will be. Premium features like unlimited 
 
 ---
 
-*Ready to stop checking five sites every day? [Start searching now.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

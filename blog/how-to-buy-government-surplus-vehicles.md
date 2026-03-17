@@ -100,4 +100,4 @@ Factor transport into your maximum bid. A vehicle that "only" costs $4,000 but n
 
 ---
 
-*GovGrab lets you search government vehicle auctions across GSA, GovDeals, PublicSurplus, and more — all in one place. [Start searching for free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

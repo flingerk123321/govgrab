@@ -175,4 +175,4 @@ The trick is finding the same type of item across all platforms and buying where
 
 ---
 
-*That's exactly what GovGrab does. One search across GSA Auctions, GovDeals, PublicSurplus, Municibid, and more. True cost calculated automatically. [Search government auctions for free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

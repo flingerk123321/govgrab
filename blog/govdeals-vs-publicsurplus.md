@@ -84,4 +84,4 @@ The smart play is to search both. The same type of item can appear on either pla
 
 ---
 
-*GovGrab searches GovDeals, PublicSurplus, and every other major government auction platform at once. Stop checking sites one at a time. [Try it free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

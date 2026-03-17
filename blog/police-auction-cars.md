@@ -109,4 +109,4 @@ Police auction cars are a legitimate way to save money — especially retired fl
 
 ---
 
-*GovGrab aggregates vehicle listings from GovDeals, PropertyRoom, GSA Auctions, and more — so you can compare police auction cars across platforms in one search. [Start searching on GovGrab.](https://govgrab.com)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

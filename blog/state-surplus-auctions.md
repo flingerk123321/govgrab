@@ -100,4 +100,4 @@ DOT equipment is the star here — New York maintains an enormous fleet of snowp
 
 ---
 
-*GovGrab aggregates state surplus listings alongside federal auctions so you can search everything in one place. Set alerts for your state and category, and never miss a listing. [Get started free.](/)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.

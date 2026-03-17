@@ -125,4 +125,4 @@ Government surplus laptops and electronics are one of the most consistent opport
 
 ---
 
-*GovGrab lets you search across GovDeals, PublicSurplus, GSA Auctions, and other platforms in one place — so you never miss a surplus electronics listing. [Try GovGrab for free.](https://govgrab.com)*
+**Ready to find deals?** [Search government auctions on GovGrab](https://govgrab.net) — one search across GSA Auctions, GovDeals, PublicSurplus, and Municibid. Free, no account required.
